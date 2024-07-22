@@ -1,0 +1,10 @@
+{
+    "name": "FastAPI",
+    "type": "python",
+    "request": "launch",
+    "module": "uvicorn",
+    "args": [
+        "main:app",  // 请替换为你的 FastAPI 应用实例的路径
+        "--reload"
+    ]
+}
