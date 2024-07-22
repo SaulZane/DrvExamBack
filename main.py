@@ -19,9 +19,9 @@ import time
 import pandas as pd
 
 
-#重启oracle服务监听
-#lsnrctl status
-#uvicorn main:app --reload
+#重启oracle服务监听,数据库信息
+#lsnrctl status   identified by trff_app
+#uvicorn main:app --reload   
 
 #https://www.oracle.com/database/technologies/appdev/python/quickstartpythononprem.html
 #https://docs.sqlalchemy.org/en/20/dialects/oracle.html#module-sqlalchemy.dialects.oracle.oracledb
@@ -37,9 +37,9 @@ app.add_middleware(
     allow_headers=["*"],  # 允许所有请求头
 )
 
-engine=create_engine("oracle+oracledb://ksk:ksk@192.168.1.115:1521/?service_name=orcl",echo=True)
+engine=create_engine("oracle+oracledb://ksk:ksk@192.168.1.116:1521/?service_name=orcl",echo=True)
 engine2=create_engine("sqlite:///database.db",echo=True)
-engine3=create_engine("oracle+oracledb://vehweb:vehweb@192.168.1.115:1521/?service_name=orcl",echo=True)
+engine3=create_engine("oracle+oracledb://vehweb:vehweb@192.168.1.116:1521/?service_name=orcl",echo=True)
 
 @app.get("/")
 def root():
@@ -268,6 +268,7 @@ class KSYJ_YYQK_LOG(SQLModel,table=True):
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+    results2=[]
     try:
         await websocket.accept()
         while True:
