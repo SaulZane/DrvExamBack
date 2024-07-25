@@ -17,6 +17,7 @@ from sqlalchemy.sql import text
 from sqlalchemy.exc import SQLAlchemyError
 import time
 import pandas as pd
+import polars as pl
 
 
 #重启oracle服务监听,数据库信息
@@ -318,3 +319,17 @@ async def getyyqksfzmhm():
             answer.append(result)
         pd.DataFrame(answer).to_excel("getyyqksfzmhm.xlsx",'YYQK表导出的身份证号码',header=False,index=False)
     return FileResponse("getyyqksfzmhm.xlsx")
+
+@app.post("/uploadfileFJ")
+async def uploadfileFJ(file: UploadFile = File(...)):
+    """
+    上传飞机航行数据
+
+    Parameters:
+    - file (UploadFile): 上传的文件.
+
+    Returns:
+    - None
+    """
+    df=pl.read_excel(file.file.read())
+    print(df)
