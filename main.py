@@ -18,6 +18,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import time
 import pandas as pd
 import polars as pl
+import duckdb
 
 
 #重启oracle服务监听,数据库信息
@@ -332,4 +333,6 @@ async def uploadfileFJ(file: UploadFile = File(...)):
     - None
     """
     df=pl.read_excel(file.file.read())
+    df=duckdb.sql("select * from df where xm='蔡子怡'").pl()
     print(df)
+
